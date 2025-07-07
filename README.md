@@ -1,47 +1,115 @@
 ![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
 
-# n8n-nodes-starter
+# n8n-nodes-langfuse-ai-agent
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](https://n8n.io). It includes the node linter and other dependencies.
+This is an n8n community node that integrates with [Langfuse](https://langfuse.com/) to run AI agents with prompt management and tracing capabilities. It allows you to execute AI workflows using prompts stored in Langfuse, with automatic tracing and monitoring of your AI operations.
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+Langfuse is an open-source LLM observability and prompt management platform that helps you monitor, debug, and improve your AI applications.
 
-If you would like your node to be available on n8n cloud you can also [submit your node for verification](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/).
+[n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
-## Prerequisites
+[Installation](#installation)  
+[Operations](#operations)  
+[Credentials](#credentials)  
+[Compatibility](#compatibility)  
+[Usage](#usage)  
+[Resources](#resources)  
 
-You need the following installed on your development machine:
+## Installation
 
-* [git](https://git-scm.com/downloads)
-* Node.js and npm. Minimum version Node 20. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-  ```
-  npm install n8n -g
-  ```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
+Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
-## Using this starter
+## Operations
 
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
+### AI Agent (Langfuse)
 
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
-   ```
-   git clone https://github.com/<your organization>/<your-repo-name>.git
-   ```
-3. Run `npm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `npm run lint` to check for errors or `npm run lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
+Executes an AI agent using prompts from Langfuse with structured output parsing and automatic tracing.
 
-## More information
+**Inputs:**
+- **Main**: Any data you want to pass to the AI agent
+- **Chat Model**: An AI language model connection (required)
+- **Output Parser**: A structured output parser connection (required)
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
+**Outputs:**
+- **Main**: The structured output from the AI agent
+
+## Credentials
+
+### Langfuse API
+
+To use this node, you need to set up Langfuse credentials:
+
+1. **Sign up for Langfuse**: Create an account at [Langfuse Cloud](https://cloud.langfuse.com/) or set up a self-hosted instance
+2. **Get your API keys**: 
+   - Go to your Langfuse project settings
+   - Navigate to the API Keys section
+   - Create a new API key or use an existing one
+3. **Configure credentials in n8n**:
+   - **Langfuse Host URL**: Your Langfuse instance URL (default: `https://cloud.langfuse.com`)
+   - **Public Key**: Your Langfuse public API key
+   - **Secret Key**: Your Langfuse secret API key
+
+## Usage
+
+### Setting up your workflow
+
+1. **Add the Langfuse AI Agent node** to your workflow
+2. **Connect a Chat Model**: Add an AI language model node (like OpenAI, Anthropic, etc.) and connect it to the "Chat Model" input
+3. **Connect an Output Parser**: Add a structured output parser node and connect it to the "Output Parser" input
+4. **Configure the node**:
+   - **Prompt Name**: Select a prompt from your Langfuse project (the node will automatically fetch available prompts)
+   - **Prompt Parameters**: Provide parameters for your prompt as a JSON object
+
+### Example workflow
+
+Here's a simple example of how to use the Langfuse AI Agent node:
+
+1. **Start with a trigger** (e.g., Manual trigger)
+2. **Add an AI model** (e.g., OpenAI)
+3. **Add an output parser** (e.g., Structured Output Parser)
+4. **Add the Langfuse AI Agent node** and connect both the AI model and output parser
+5. **Configure the node** with your prompt name and parameters
+
+### Node Configuration
+
+![Node Configuration](images/node.png)
+
+The node configuration panel shows:
+- **Prompt Name**: Dropdown of available prompts from your Langfuse project
+- **Prompt Parameters**: JSON object containing parameters for your prompt
+
+### Node Panel
+
+![Node Panel](images/node_panel.png)
+
+The node panel displays:
+- Input connections for Chat Model and Output Parser
+- Output connection for the structured result
+- Credentials configuration for Langfuse API
+
+### Example Prompt Parameters
+
+```json
+{
+  "user_input": "{{ $json.user_message }}",
+  "context": "{{ $json.context }}",
+}
+```
+
+### Tracing and Monitoring
+
+The node automatically:
+- Traces all AI operations in Langfuse
+- Logs prompts, responses, and metadata
+- Provides observability into your AI workflows
+- Enables debugging and performance monitoring
+
+## Resources
+
+* [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
+* [Langfuse Documentation](https://langfuse.com/docs)
+* [Langfuse API Documentation](https://langfuse.com/docs/api)
+* [n8n AI Nodes Documentation](https://docs.n8n.io/integrations/builtin/cluster-nodes/sub-nodes/n8n-nodes-langchain/)
 
 ## License
 
