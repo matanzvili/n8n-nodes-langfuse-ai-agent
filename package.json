@@ -36,7 +36,7 @@
       "dist/credentials/LangfuseApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/Langfuse/LangfuseAIAgent.node.js"
+      "dist/nodes/Langfuse/LangfuseAiAgent.node.js"
     ]
   },
   "devDependencies": {

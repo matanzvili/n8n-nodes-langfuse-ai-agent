@@ -33,10 +33,10 @@ export async function getPrompts(this: ILoadOptionsFunctions): Promise<INodeProp
 	}
 }
 
-export class LangfuseAIAgent implements INodeType {
+export class LangfuseAiAgent implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Langfuse AI Agent',
-		name: 'langfuseAIAgent',
+		name: 'langfuseAiAgent',
 		icon: 'file:langfuse.svg',
 		group: ['transform'],
 		version: 1,
@@ -70,7 +70,7 @@ export class LangfuseAIAgent implements INodeType {
 		},
 		properties: [
 			{
-				displayName: 'Prompt Name',
+				displayName: 'Prompt Name or ID',
 				name: 'promptName',
 				type: 'options',
 				typeOptions: {
@@ -78,7 +78,7 @@ export class LangfuseAIAgent implements INodeType {
 				},
 				required: true,
 				default: '',
-				description: 'The name of the prompt to retrieve from Langfuse',
+				description: 'The name of the prompt to retrieve from Langfuse. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 			},
 			{
 				displayName: 'Prompt Parameters',
