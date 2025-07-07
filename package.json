@@ -1,19 +1,19 @@
 {
-  "name": "n8n-nodes-<...>",
+  "name": "n8n-nodes-langfuse-ai-agent",
   "version": "0.1.0",
-  "description": "",
+  "description": "Langfuse nodes for n8n",
   "keywords": [
     "n8n-community-node-package"
   ],
   "license": "MIT",
   "homepage": "",
   "author": {
-    "name": "",
-    "email": ""
+    "name": "Matan Zvili",
+    "email": "matanzvili@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/<...>/n8n-nodes-<...>.git"
+    "url": "https://github.com/matanzvili/n8n-nodes-langfuse-ai-agent.git"
   },
   "engines": {
     "node": ">=20.15"
@@ -33,19 +33,27 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
+      "dist/credentials/LangfuseApi.credentials.js"
     ],
     "nodes": [
+      "dist/nodes/Langfuse/LangfuseAIAgent.node.js"
     ]
   },
   "devDependencies": {
+    "@types/node": "^24.0.10",
     "@typescript-eslint/parser": "~8.32.0",
     "eslint": "^8.57.0",
     "eslint-plugin-n8n-nodes-base": "^1.16.3",
     "gulp": "^5.0.0",
     "prettier": "^3.5.3",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   },
   "peerDependencies": {
     "n8n-workflow": "*"
+  },
+  "dependencies": {
+    "@langchain/core": "^0.3.58",
+    "langchain": "^0.3.29",
+    "langfuse-langchain": "^3.38.2"
   }
 }
